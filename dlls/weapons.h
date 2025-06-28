@@ -361,6 +361,7 @@ public:
 	int m_iClientClip;			   // the last version of m_iClip sent to hud dll
 	int m_iClientWeaponState;	   // the last version of the weapon state sent to hud dll (is current weapon, is on target)
 	bool m_fInReload;			   // Are we in the middle of a reload;
+	bool m_fTriggerReleased;	   // For SMOD semi-auto weapons
 
 	int m_iDefaultAmmo; // how much ammo you get when you pick up this weapon as placed by a level designer.
 
@@ -499,11 +500,13 @@ public:
 	bool GetItemInfo(ItemInfo* p) override;
 
 	void PrimaryAttack() override;
-	void SecondaryAttack() override;
+	//void SecondaryAttack() override;
 	void GlockFire(float flSpread, float flCycleTime, bool fUseAutoAim);
 	bool Deploy() override;
 	void Reload() override;
 	void WeaponIdle() override;
+
+	bool triggerReleased;
 
 	bool UseDecrement() override
 	{
