@@ -2637,13 +2637,13 @@ void PM_Jump()
 		return;						  // in air, so no effect
 	}
 
-	if ((pmove->oldbuttons & IN_JUMP) != 0)
-		return; // don't pogo stick
+	//if ((pmove->oldbuttons & IN_JUMP) != 0)
+		//return; // don't pogo stick
 
 	// In the air now.
 	pmove->onground = -1;
 
-	PM_PreventMegaBunnyJumping();
+	//PM_PreventMegaBunnyJumping();
 
 	// Don't play jump sounds while frozen.
 	if ((pmove->flags & FL_FROZEN) == 0)
