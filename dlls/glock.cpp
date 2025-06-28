@@ -89,7 +89,7 @@ bool CGlock::Deploy()
 
 void CGlock::PrimaryAttack()
 {
-	if (!m_fTriggerReleased) return;
+	if (!m_fTriggerReleased || m_iClip <= 0) return;
 	GlockFire(0.01, 0.1, true);
 	m_fTriggerReleased = false;
 }
