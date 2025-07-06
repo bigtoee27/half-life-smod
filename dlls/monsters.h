@@ -155,9 +155,10 @@ public:
 	void EXPORT BounceGibTouch(CBaseEntity* pOther);
 	void EXPORT StickyGibTouch(CBaseEntity* pOther);
 	void EXPORT WaitTillLand();
+	void EXPORT Eat(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 	void LimitVelocity();
 
-	int ObjectCaps() override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DONT_SAVE; }
+	int ObjectCaps() override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DONT_SAVE | FCAP_IMPULSE_USE; }
 	static void SpawnHeadGib(entvars_t* pevVictim);
 	static void SpawnRandomGibs(entvars_t* pevVictim, int cGibs, bool human);
 	static void SpawnStickyGibs(entvars_t* pevVictim, Vector vecOrigin, int cGibs);

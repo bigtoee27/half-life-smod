@@ -248,6 +248,15 @@ void CGib::SpawnRandomGibs(entvars_t* pevVictim, int cGibs, bool human)
 	}
 }
 
+void CGib::Eat(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+{
+	if (pActivator && pActivator->IsPlayer())
+	{
+		pActivator->TakeHealth(1, DMG_GENERIC);
+		EMIT_SOUND(ENT(pev), CHAN_ITEM, "common/bodysplat.wav", 1, ATTN_NORM);
+		UTIL_Remove(this);
+	}
+}
 
 bool CBaseMonster::HasHumanGibs()
 {
@@ -309,7 +318,7 @@ void CBaseMonster::GibMonster()
 		if (CVAR_GET_FLOAT("violence_hgibs") != 0) // Only the player will ever get here
 		{
 			CGib::SpawnHeadGib(pev);
-			CGib::SpawnRandomGibs(pev, 4, true); // throw some human gibs.
+			CGib::SpawnRandomGibs(pev, 10, true); // throw some human gibs.
 		}
 		gibbed = true;
 	}
@@ -317,7 +326,7 @@ void CBaseMonster::GibMonster()
 	{
 		if (CVAR_GET_FLOAT("violence_agibs") != 0) // Should never get here, but someone might call it directly
 		{
-			CGib::SpawnRandomGibs(pev, 4, false); // Throw alien gibs
+			CGib::SpawnRandomGibs(pev, 10, false); // Throw alien gibs
 		}
 		gibbed = true;
 	}
@@ -776,7 +785,8 @@ void CGib::StickyGibTouch(CBaseEntity* pOther)
 // Throw a chunk
 //
 void CGib::Spawn(const char* szGibModel)
-{
+{	
+	PRECACHE_SOUND("common/bodysplat.wav");
 	pev->movetype = MOVETYPE_BOUNCE;
 	pev->friction = 0.55; // deading the bounce a bit
 
@@ -795,6 +805,7 @@ void CGib::Spawn(const char* szGibModel)
 	m_lifeTime = 25;
 	SetThink(&CGib::WaitTillLand);
 	SetTouch(&CGib::BounceGibTouch);
+	SetUse(&CGib::Eat);
 
 	m_material = matNone;
 	m_cBloodDecals = 5; // how many blood decals this gib can place (1 per bounce until none remain).
