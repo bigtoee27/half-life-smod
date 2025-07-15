@@ -253,7 +253,6 @@ void CGib::Eat(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, 
 	if (pActivator && pActivator->IsPlayer())
 	{
 		pActivator->TakeHealth(1, DMG_GENERIC);
-		EMIT_SOUND(ENT(pev), CHAN_ITEM, "common/bodysplat.wav", 1, ATTN_NORM);
 		UTIL_Remove(this);
 	}
 }
@@ -786,7 +785,6 @@ void CGib::StickyGibTouch(CBaseEntity* pOther)
 //
 void CGib::Spawn(const char* szGibModel)
 {	
-	PRECACHE_SOUND("common/bodysplat.wav");
 	pev->movetype = MOVETYPE_BOUNCE;
 	pev->friction = 0.55; // deading the bounce a bit
 
